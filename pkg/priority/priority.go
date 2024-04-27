@@ -1,20 +1,20 @@
-package huffmanpriorityqueue
+package priority
 
 import (
-  "huffmango/pkg/huffmannode"
+  "huffmango/pkg/node"
   "fmt"
 )
 
 // Priority Queue
 
 type PriorityQueue struct {
-  Queue []HuffmanNode
+  Queue []node.HuffmanNode
   Size int
 }
 
 func NewPriorityQueue() *PriorityQueue {
   return &PriorityQueue{
-    Queue: []HuffmanNode{},
+    Queue: []node.HuffmanNode{},
     Size: 0,
   }
 }
@@ -25,11 +25,11 @@ func (pq *PriorityQueue) getParent(i int) int {return (i-1)/2}
 func (pq *PriorityQueue) getLeft(i int) int {return 2*i+1}
 func (pq *PriorityQueue) getRight(i int) int {return 2*i+2}
 
-func (pq *PriorityQueue) append(n *HuffmanNode) {
+func (pq *PriorityQueue) append(n *node.HuffmanNode) {
   pq.Queue = append(pq.Queue, *n)
 }
 
-func (pq *PriorityQueue) write(i int, n HuffmanNode) {
+func (pq *PriorityQueue) write(i int, n node.HuffmanNode) {
   pq.Queue[i] = n
 }
 func (pq *PriorityQueue) truncate() {
@@ -43,7 +43,7 @@ func (pq *PriorityQueue) decSize() {
   pq.Size -= 1
 }
 
-func (pq *PriorityQueue) getNode(i int) HuffmanNode {
+func (pq *PriorityQueue) getNode(i int) node.HuffmanNode {
   return pq.Queue[i];
 }
 
@@ -73,7 +73,7 @@ func (pq *PriorityQueue) heapify(i int) {
 
 // public functions
 
-func (pq *PriorityQueue) Peek() HuffmanNode {
+func (pq *PriorityQueue) Peek() node.HuffmanNode {
   return pq.Queue[0];
 }
 
@@ -85,7 +85,7 @@ func (pq *PriorityQueue) Count() int {
   return pq.Size;
 }
 
-func (pq *PriorityQueue) Enqueue(n *HuffmanNode) {
+func (pq *PriorityQueue) Enqueue(n *node.HuffmanNode) {
   pq.append(n)
   pq.incSize()
   current := pq.Count()-1
@@ -102,7 +102,7 @@ func (pq *PriorityQueue) Enqueue(n *HuffmanNode) {
   }
 }
 
-func (pq *PriorityQueue) Dequeue() *HuffmanNode {
+func (pq *PriorityQueue) Dequeue() *node.HuffmanNode {
   if pq.Count() > 0 {
     priority := pq.Peek()
     last := pq.getNode(pq.Count()-1)

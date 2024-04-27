@@ -1,15 +1,12 @@
 package main
 
 import (
-  "huffmango/pkg/huffmannode"
-  "huffmango/pkg/huffmanpriorityqueue"
-  "huffmango/pkg/huffmanalgo"
+  "huffmango/pkg/algo"
   "encoding/csv"
   "fmt"
   "log"
   "os"
   "strconv"
-  "sort"
   "math"
 )
 
@@ -22,7 +19,7 @@ func main() {
 
   // LOADING FILES into MAPS
   for index, filename := range csvnames {
-    file, err := os.Open("data/"+csvnames[index])
+    file, err := os.Open("./cmd/data/"+csvnames[index])
     if err != nil {
         log.Fatalf("Failed to open file: %v", err)
     }
@@ -50,7 +47,7 @@ func main() {
     csvtotals[filename] = total
   }
   // LOADING IMC into MAP
-  file, err := os.Open("data/IMC.csv")
+  file, err := os.Open("./cmd/data/IMC.csv")
   if err != nil {
       log.Fatalf("Failed to open file: %v", err)
   }
@@ -76,20 +73,20 @@ func main() {
     }
   }
 
-  MorseCode := NewEncoding("MorseCode",1)
+  MorseCode := algo.NewEncoding("MorseCode",1)
   for symbol, codeword := range imccsv {
     MorseCode.SetCodeword(symbol,codeword)
   }
   MorseCode.Show()
   fmt.Println(csvfiles["single_counts.csv"])
-  Q5b := HuffmanAlgo("Q5 (b)",csvfiles["single_counts.csv"])
-  Q5c := HuffmanAlgo("Q5 (c)",pairsfromsinglecounts)
-  Q5d := HuffmanAlgo("Q5 (d)",csvfiles["double_counts.csv"])
+  Q5b := algo.HuffmanAlgo("Q5 (b)",csvfiles["single_counts.csv"])
+  Q5c := algo.HuffmanAlgo("Q5 (c)",pairsfromsinglecounts)
+  Q5d := algo.HuffmanAlgo("Q5 (d)",csvfiles["double_counts.csv"])
 
   fmt.Println("\n~\n")
 
-  computeAvgLengthGivenDouble := func(enc *Encoding, base int) float64 {
-    return avgMsgLength(enc,csvfiles["double_counts.csv"],csvtotals["double_counts.csv"],math.Log2(float64(base)))
+  computeAvgLengthGivenDouble := func(enc *algo.Encoding, base int) float64 {
+    return algo.AvgMsgLength(enc,csvfiles["double_counts.csv"],csvtotals["double_counts.csv"],math.Log2(float64(base)))
   }
 
   computeAvgLengthGivenDouble(MorseCode, 3)
@@ -109,8 +106,8 @@ func main() {
   infotheory3["BBA"] = 7
   infotheory3["BBB"] = 1
 
-  Sheet3Q4c := HuffmanAlgo("infotheory3",infotheory3)
-  avgMsgLength(Sheet3Q4c,infotheory3,512,1)
+  Sheet3Q4c := algo.HuffmanAlgo("infotheory3",infotheory3)
+  algo.AvgMsgLength(Sheet3Q4c,infotheory3,512,1)
 
 }
 

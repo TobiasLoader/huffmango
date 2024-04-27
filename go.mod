@@ -1,3 +1,3 @@
-module github.com/TobiasLoader/huffmango
+module huffmango
 
 go 1.20

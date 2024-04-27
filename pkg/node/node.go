@@ -1,7 +1,8 @@
-package huffmannode
+package node
 
 import (
   "fmt"
+  "strconv"
 )
 
 type HuffmanNode struct {
